@@ -15,5 +15,5 @@ docker build -t sqlflow/sqlflow:$DOCKER_TAG -f ./Dockerfile .
 
 echo $COVERALLS_TOKEN
 
-docker run --rm -it -v $GOPATH:/go sqlflow/sqlflow:$DOCKER_TAG \
-bash -c "go get golang.org/x/tools/cmd/cover && go get github.com/mattn/goveralls && /go/bin/goveralls --help"
+docker run --rm -it -v $GOPATH:/go -w /go/src/github.com/sql-machine-learning/sqlflow sqlflow/sqlflow:$DOCKER_TAG \
+bash -c "ls -l && go get golang.org/x/tools/cmd/cover && go get github.com/mattn/goveralls && /go/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN"
